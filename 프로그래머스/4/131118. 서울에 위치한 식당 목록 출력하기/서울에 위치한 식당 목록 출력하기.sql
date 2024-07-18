@@ -1,0 +1,12 @@
+SELECT RI.REST_ID, REST_NAME, FOOD_TYPE, FAVORITES, ADDRESS, AVG_SCORE as SCORE
+           FROM REST_INFO AS RI
+     INNER JOIN (
+                SELECT REST_ID,ROUND(AVG(REVIEW_SCORE),2) AS AVG_SCORE
+                  FROM REST_REVIEW
+                  WHERE REST_ID IS NOT NULL
+                GROUP BY REST_ID
+            ) 
+             AS RR
+             ON RI.REST_ID = RR.REST_ID
+          WHERE RI.ADDRESS LIKE('서울%')
+       ORDER BY RR.AVG_SCORE DESC, RI.FAVORITES DESC;
