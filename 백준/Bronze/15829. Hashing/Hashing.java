@@ -16,10 +16,15 @@ public class Main {
         long MOD  = 1234567891;
         long answer = 0;
 
+        //[체크] : Math.pow를 사용할 경우, 정밀도가 한정되어 있어 손실이 나타날 수 있다.
+        long r = 31;
+        long power = 1;  //r^0 = 1
+
         //각 항들의 숫자로 대치하여 저장
         for(int i = 0 ; i< L ; i++){
-            answer = answer + (long) ((input.charAt(i) - 'a' + 1)*Math.pow(31, i)%MOD);
+            answer = answer + (long) ((input.charAt(i) - 'a' + 1)*power%MOD);
+            power  = (power*r)%MOD; //다음 거듭제곱을 위해 업데이트해준다.
         }
-        System.out.println(answer);
+        System.out.println(answer%MOD);
     }
 }
