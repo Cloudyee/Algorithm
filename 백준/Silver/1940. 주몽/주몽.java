@@ -6,39 +6,44 @@ import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader bf = new BufferedReader(new InputStreamReader(System.in));
-        //입력 받을 갯수
-        int N = Integer.parseInt(bf.readLine());
-        //도출할 합의 값
-        int M = Integer.parseInt(bf.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        //재료의 개수
+        int N = Integer.parseInt(br.readLine());
+        //갑옷을 만드는 데 필요한 수
+        int M = Integer.parseInt(br.readLine());
 
-        //입력값들 저장
-        int [] A = new int [N];
-        StringTokenizer st = new StringTokenizer(bf.readLine());
-        for(int i = 0 ; i<N; i++){
-            A[i]=Integer.parseInt(st.nextToken());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        //재료들의 고유한 번호
+        int [] nums = new int[N];
+        for(int i = 0; i < N; i++){
+            nums[i] = Integer.parseInt(st.nextToken());
         }
-        //오름차순 정렬
-        Arrays.sort(A);
+
+        //시간 단축을 위해 값을 정렬한다.
+        Arrays.sort(nums);
+
+        //투포인터를 활용하여 번호의 합을 구한다.
+        /*
+        자꾸 배열을 단순 반복하여 활용하려는 습관이 있다.
+        고치도록하자.
+         */
+        int start = 0;
+        int end = N-1;
 
         //경우의 수
         int count = 0;
-        int i = 0;
-        int j = N-1;
-
-        //투 포인터
-        while(i<j){
-            if(A[i]+A[j]<M){
-                i++;
-            }else if(A[i]+A[j]>M){
-                j--;
+        while(start < end){
+            if(nums[start] + nums[end] < M){
+                start++;
+            }else if(nums[start] + nums[end] > M){
+                end--;
             }else{
                 count++;
-                i++;
-                j--;
+                start++;
+                end--;
             }
         }
         System.out.println(count);
-        bf.close();
+        br.close();
     }
 }
