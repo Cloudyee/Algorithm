@@ -2,54 +2,57 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        //수의 개수 N
+
+        //수의 개수
         int N = Integer.parseInt(br.readLine());
-        //좋은 수의 갯수
-        int Result = 0;
-        //수 저장 배열
-        long A[] = new long[N];
 
         StringTokenizer st = new StringTokenizer(br.readLine());
-        //입력 받은 수를 배열에 저장
-        for(int i = 0; i<N;i++){
-            A[i] = Long.parseLong(st.nextToken());
+
+        //N개의 입력값들을 저장할 배열
+        Long[] input = new Long[N];
+        for(int i = 0 ; i<N ; i++){
+            input[i] = Long.parseLong(st.nextToken());
         }
-        //입력받은 값을 정렬
-        Arrays.sort(A);
 
-        for(int k =0; k<N; k++){
-            {
-                //좋은 숫자를 찾기 위한 k
-                long find = A[k];
-                int i = 0;
-                int j = N - 1;
+        //값들을 정렬
+        Arrays.sort(input);
 
-                //투 포인터 알고리즘
-                while (i < j) {
-                    if (A[i] + A[j] == find){
-                        //find는 서로 다른 두 수의 합이어야 한다.
-                        if(i!=k && j!=k){
-                            Result++;
-                            break;
-                        } else if(i==k){
-                            i++;
-                        } else if (j==k){
-                            j--;
-                        }
-                    }else if(A[i] + A[j] < find){
-                        i++;
-                    }else{
-                        j--;
-                    }
+        int count = 0;  //좋은 수의 개수
+
+        // ** 값을 하나씩 순회하며,
+        //투 포인터 알고리즘을 활용하여 문제를 해결
+        for(int i = 0; i<N ; i++){
+            int start = 0;
+            int end = N-1;
+            //좋은 수
+            Long goodNum = input[i];
+
+            while(start < end) {
+                if(input[start] + input[end] == goodNum){
+                    /*
+                    아래와 같이, 현재의 인덱스가 좋은 수가 되어서는 안된다.
+                     */
+                    if(start != i && end != i){
+                        count++;
+                        break;
+                    }else if(start == i)
+                        start++;
+                    else if(end==i)
+                        end--;
+
+                }else if(input[start] + input[end] < goodNum){
+                    start++;
+                }else{
+                    end--;
                 }
             }
         }
-        System.out.println(Result);
-        br.close();
+            System.out.println(count);
     }
 }
