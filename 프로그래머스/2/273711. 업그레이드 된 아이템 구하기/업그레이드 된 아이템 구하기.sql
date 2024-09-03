@@ -1,4 +1,3 @@
--- 코드를 작성해주세요
 WITH ID AS (
     SELECT b.ITEM_ID AS ITEM_ID 
     FROM ITEM_INFO a
@@ -8,7 +7,6 @@ WITH ID AS (
     AND a.RARITY = 'RARE'
     ORDER BY b.ITEM_ID DESC
 ) 
-
 SELECT a.ITEM_ID, a.ITEM_NAME , a.RARITY
 FROM ITEM_INFO a
 JOIN ID
