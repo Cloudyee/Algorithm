@@ -1,0 +1,7 @@
+-- 코드를 작성해주세요
+-- 부모 ID를 기준으로 자식을 카운트해야한다....
+SELECT a.ID, COUNT(b.PARENT_ID) AS CHILD_COUNT
+FROM ECOLI_DATA a
+LEFT JOIN (SELECT PARENT_ID FROM ECOLI_DATA) b
+ON a.ID = b.PARENT_ID
+GROUP BY a.ID
